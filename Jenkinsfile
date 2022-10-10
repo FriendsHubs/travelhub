@@ -24,10 +24,12 @@ pipeline {
         docker { image 'node:16.13.1-alpine' }
     }
             steps {
-               dir('frontend')
-               sh "ls"
-               sh "npm install"
-               sh "npm run build"
+               dir('frontend'){
+
+                sh "ls"
+                sh "npm install"
+                sh "npm run build"
+               }
             }
         }
         // stage('test frontend') {
