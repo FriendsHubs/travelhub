@@ -24,7 +24,8 @@ pipeline {
         docker { image 'node:16.13.1-alpine' }
     }
             steps {
-                sh "cd frontend"
+               sh "cd frontend"
+               sh "ls"
                sh "npm install"
                sh "npm run build"
             }
