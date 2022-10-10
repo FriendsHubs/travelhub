@@ -12,21 +12,11 @@ pipeline {
             steps {
                 sh cd frontend
                 yarn build
-
             }
         }
         stage('test frontend') {
             steps {
                 echo 'Building.. two again'
-            }
-        }
-        stage('') {
-            steps {
-                sh cd frontend
-                
-            }
-            steps {
-                yarn build
             }
         }
         stage('Deploy') {
