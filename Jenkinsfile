@@ -3,12 +3,12 @@ pipeline {
 
     stages {
         stage('build frontend') {
-            agent {
-                docker {
-                    image 'alpine:3.15'
-                    reuseNode: true
-                }
-            }
+            // agent {
+            //     docker {
+            //         image 'alpine:3.15'
+            //         reuseNode: true
+            //     }
+            // }
             steps {
                 sh "cd frontend"
                 sh "yarn build"
