@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh ' sudo node --version'
+                sh 'sudo node --version'
             }
         }
     }
