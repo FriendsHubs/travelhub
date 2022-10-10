@@ -1,45 +1,42 @@
-pipeline {
-    agent {
-        docker { image 'node:16.13.1-alpine' }
-    }
-    stages {
-        stage('Test') {
-            steps {
-                sh 'node --version'
-            }
-        }
-    }
-}
-
-
-
-
-
 // pipeline {
-//     agent any
-
+//     agent {
+//         docker { image 'node:16.13.1-alpine' }
+//     }
 //     stages {
-//         stage('build frontend') {
-//             // agent {
-//             //     docker {
-//             //         image 'alpine:3.15'
-//             //         reuseNode: true
-//             //     }
-//             // }
+//         stage('Test') {
 //             steps {
-//                 sh "cd frontend"
-//                 sh "yarn build"
-//             }
-//         }
-//         stage('test frontend') {
-//             steps {
-//                 echo 'Building.. two again'
-//             }
-//         }
-//         stage('Deploy') {
-//             steps {
-//                 echo 'Deploying....'
+//                 sh 'node --version'
 //             }
 //         }
 //     }
 // }
+
+
+
+
+
+pipeline {
+    agent none
+
+    stages {
+        stage('build frontend') {
+    agent {
+        docker { image 'node:16.13.1-alpine' }
+    }
+            steps {
+               sh "npm install"
+               sh "npm run build"
+            }
+        }
+        // stage('test frontend') {
+        //     steps {
+        //         echo 'Building.. two again'
+        //     }
+        // }
+        // stage('Deploy') {
+        //     steps {
+        //         echo 'Deploying....'
+        //     }
+        // }
+    }
+}
