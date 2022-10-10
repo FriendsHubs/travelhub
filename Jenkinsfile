@@ -10,8 +10,8 @@ pipeline {
                 }
             }
             steps {
-                sh cd frontend
-                yarn build
+                sh "cd frontend"
+                sh "yarn build"
             }
         }
         stage('test frontend') {
