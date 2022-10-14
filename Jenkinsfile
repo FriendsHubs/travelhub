@@ -16,13 +16,13 @@
 
 
 pipeline {
-    agent { label 'jenkins-agent' }
+    agent { label 'slave-zero' }
 
     stages {
         stage('build frontend') {
-    // agent {
-    //     docker { image 'node:16.13.1-alpine' }
-    // }
+    agent {
+        docker { image 'node:16.13.1-alpine' }
+    }
             steps {
                dir('frontend'){
 
