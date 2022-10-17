@@ -15,17 +15,19 @@
 pipeline {
     // agent {  }
     agent {
-        docker {
-            image 'node:16.13.1-alpine'
-            label 'slave-zero'
-        // args  '-v /tmp:/tmp'
-        }
+        label 'slave-zero'
+        // docker {
+        //     image 'node:16.13.1-alpine'
+        //     label 'slave-zero'
+        // // args  '-v /tmp:/tmp'
+        // }
     }
 
     stages {
         stage('build frontend') {
             steps {
                 dir('frontend') {
+                    sh "whoami"
                     sh 'ls'
                     sh 'npm install'
                     sh 'npm run build'
