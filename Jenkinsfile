@@ -15,12 +15,11 @@
 pipeline {
     // agent {  }
     agent {
-        label 'slave-zero'
-        // docker {
-        //     image 'node:16.13.1-alpine'
-        //     label 'slave-zero'
-        // // args  '-v /tmp:/tmp'
-        // }
+        docker {
+            image 'node:16.13.1-alpine'
+            label 'slave-zero'
+        // args  '-v /tmp:/tmp'
+        }
     }
 
     stages {
