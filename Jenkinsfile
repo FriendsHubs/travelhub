@@ -11,36 +11,36 @@
 //     }
 // }
 
-
-
-
-
+/* groovylint-disable-next-line CompileStatic */
 pipeline {
-    agent { label 'slave-zero' }
+    // agent {  }
+    agent {
+        docker {
+            image 'node:16.13.1-alpine'
+            label 'slave-zero'
+        // args  '-v /tmp:/tmp'
+        }
+    }
 
     stages {
         stage('build frontend') {
-    agent {
-        docker { image 'node:16.13.1-alpine' }
-    }
             steps {
-               dir('frontend'){
-
-                sh "ls"
-                sh "npm install"
-                sh "npm run build"
-               }
+                dir('frontend') {
+                    sh 'ls'
+                    sh 'npm install'
+                    sh 'npm run build'
+                }
             }
         }
-        // stage('test frontend') {
-        //     steps {
-        //         echo 'Building.. two again'
-        //     }
-        // }
-        // stage('Deploy') {
-        //     steps {
-        //         echo 'Deploying....'
-        //     }
-        // }
+    // stage('test frontend') {
+    //     steps {
+    //         echo 'Building.. two again'
+    //     }
+    // }
+    // stage('Deploy') {
+    //     steps {
+    //         echo 'Deploying....'
+    //     }
+    // }
     }
 }
