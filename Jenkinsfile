@@ -1,13 +1,16 @@
 /* groovylint-disable , NestedBlockDepth, VariableTypeRequired */
 /* groovylint-disable-next-line CompileStatic */
 pipeline {
-    // agent {  }
     agent {
-        docker {
-            image 'node:16.13.1-alpine'
-            label 'slave-zero'
-        }
+        label 'slave-zero'
     }
+    // agent {  }
+    // agent {
+    //     docker {
+    //         image 'node:16.13.1-alpine'
+    //         label 'slave-zero'
+    //     }
+    // }
     environment {
         tools {
             'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
