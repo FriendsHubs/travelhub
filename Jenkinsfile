@@ -1,4 +1,4 @@
-/* groovylint-disable, VariableTypeRequired */
+/* groovylint-disable , NestedBlockDepth, VariableTypeRequired */
 /* groovylint-disable-next-line CompileStatic */
 pipeline {
     // agent {  }
@@ -28,10 +28,11 @@ pipeline {
                 dir('frontend') {
                     sh 'whoami'
                     sh 'ls'
-                    // script {
+                    sh "which docker"
+                    script {
                         docker.build(
                    "${params.Image_Name}:${params.Image_Tag}")
-                    // }
+                    }
                 }
             }
         }
