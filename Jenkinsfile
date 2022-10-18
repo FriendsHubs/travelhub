@@ -28,10 +28,10 @@ pipeline {
                 dir('frontend') {
                     sh 'whoami'
                     sh 'ls'
-                    script {
+                    // script {
                         docker.build(
                    "${params.Image_Name}:${params.Image_Tag}")
-                    }
+                    // }
                 }
             }
         }
