@@ -23,7 +23,7 @@ pipeline {
             description: 'Image tag')
     }
     stages {
-        stage('build frontend') {
+        stage('build frontend docker image') {
             steps {
                 dir('frontend') {
                     sh 'whoami'
@@ -38,15 +38,15 @@ pipeline {
         steps {
             script {
                 echo 'Pushing the image to docker hub'
-                def string localImage = "${params.Image_Name}:${params.Image_Tag}"
+                def localImage = "${params.Image_Name}:${params.Image_Tag}"
 
                 /* groovylint-disable-next-line VariableTypeRequired */
-                def string repositoryName = "emmanuelekama/${localImage}"
+                def repositoryName = "emmanuelekama/${localImage}"
 
                 // Create a tag that going to push into DockerHub
                 sh "docker tag ${localImage} ${repositoryName} "
                 docker.withRegistry('', 'DockerHubCredentials') {
-                    object image = docker.image("${repositoryName}")
+                    def image = docker.image("${repositoryName}")
                     image.push()
                 }
             }
