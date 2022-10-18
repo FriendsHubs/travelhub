@@ -11,11 +11,11 @@ pipeline {
     //         label 'slave-zero'
     //     }
     // }
-    environment {
-        tools {
-            'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
-        }
-    }
+    // environment {
+    //     tools {
+    //         'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
+    //     }
+    // }
     parameters {
         string(
             name: 'Branch_Name',
