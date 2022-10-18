@@ -1,16 +1,4 @@
-// pipeline {
-//     agent {
-//         docker { image 'node:16.13.1-alpine' }
-//     }
-//     stages {
-//         stage('Test') {
-//             steps {
-//                 sh 'node --version'
-//             }
-//         }
-//     }
-// }
-
+/* groovylint-disable, VariableTypeRequired */
 /* groovylint-disable-next-line CompileStatic */
 pipeline {
     // agent {  }
@@ -18,30 +6,50 @@ pipeline {
         docker {
             image 'node:16.13.1-alpine'
             label 'slave-zero'
-        // args  '-v /tmp:/tmp'
         }
     }
-
+    parameters {
+        string(
+            name: 'Branch_Name',
+            defaultValue: 'dev',
+            description: '')
+        string(
+            name: 'Image_Name',
+            defaultValue: 'travel_hub',
+            description: '')
+        string(
+            name: 'Image_Tag',
+            defaultValue: 'latest',
+            description: 'Image tag')
+    }
     stages {
         stage('build frontend') {
             steps {
                 dir('frontend') {
-                    sh "whoami"
+                    sh 'whoami'
                     sh 'ls'
-                    sh 'npm install'
-                    sh 'npm run build'
+                    docker.build(
+                   "${params.Image_Name}:${params.Image_Tag}")
                 }
             }
         }
-    // stage('test frontend') {
-    //     steps {
-    //         echo 'Building.. two again'
-    //     }
-    // }
-    // stage('Deploy') {
-    //     steps {
-    //         echo 'Deploying....'
-    //     }
-    // }
+    }
+    stage('Push to Dockerhub') {
+        steps {
+            script {
+                echo 'Pushing the image to docker hub'
+                def string localImage = "${params.Image_Name}:${params.Image_Tag}"
+
+                /* groovylint-disable-next-line VariableTypeRequired */
+                def string repositoryName = "emmanuelekama/${localImage}"
+
+                // Create a tag that going to push into DockerHub
+                sh "docker tag ${localImage} ${repositoryName} "
+                docker.withRegistry('', 'DockerHubCredentials') {
+                    object image = docker.image("${repositoryName}")
+                    image.push()
+                }
+            }
+        }
     }
 }
