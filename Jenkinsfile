@@ -8,6 +8,11 @@ pipeline {
             label 'slave-zero'
         }
     }
+    environment {
+        tools {
+            'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
+        }
+    }
     parameters {
         string(
             name: 'Branch_Name',
@@ -28,7 +33,7 @@ pipeline {
                 dir('frontend') {
                     sh 'whoami'
                     sh 'ls'
-                    sh "which docker"
+                    sh 'which docker'
                     script {
                         docker.build(
                    "${params.Image_Name}:${params.Image_Tag}")
