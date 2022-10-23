@@ -68,6 +68,7 @@ pipeline {
                 docker {
                     image 'hashicorp/terraform:latest'
                 }
+                }
                 steps{
                     sh 'ls'
                     // dir ('terraform') {
@@ -75,20 +76,21 @@ pipeline {
 
                     // }
                 }
-            }
+            
         }
 
         stage ('configure infrastructure with ansible') {
              agent {
                 docker {
                     image 'alpine:latest'
-                    
                     reuseNode true
                 }
+            }
             steps {
                 sh 'ls'
             }
         }
-
     }
+    
 }
+

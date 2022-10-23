@@ -30,3 +30,7 @@ resource "aws_instance" "public_frontend" {
     "Name" = "travelhub_frontend"
   }
 }
+
+output "frontend_ip" {
+  value = aws_instance.public_frontend.public_ip
+}
