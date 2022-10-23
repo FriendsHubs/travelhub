@@ -62,5 +62,33 @@ pipeline {
                 }
             }
         }
+
+        stage('provision infrastructure') {
+            agent{
+                docker {
+                    image 'hashicorp/terraform:latest'
+                }
+                steps{
+                    sh 'ls'
+                    // dir ('terraform') {
+                    //    sh
+
+                    // }
+                }
+            }
+        }
+
+        stage ('configure infrastructure with ansible') {
+             agent {
+                docker {
+                    image 'alpine:latest'
+                    
+                    reuseNode true
+                }
+            steps {
+                sh 'ls'
+            }
+        }
+
     }
 }
