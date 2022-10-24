@@ -57,22 +57,16 @@ pipeline {
             }
         }
 
-        // stage('provision infrastructure') {
-        //     // agent {
-        //     //     docker {
-        //     //         image 'hashicorp/terraform:light'
-        //     //     }
-        //     // }
-        //     // steps {
-        //     //     script {
-        //     //         sh 'whoami'
-        //     //     // sh 'hashicorp/terraform:light version'
-        //     //     //     sh 'docker run --rm -it hashicorp/terraform:light version'
-        //     //     // sh 'sudo docker images'
-        //     //     // sh ' sudo docker run --rm -it -v $PWD/Terraform:/data -w /data hashicorp/terraform:light init'
-        //     //     }
-        //     // }
-        // }
+        stage('provision infrastructure') {
+            agent {
+                docker {
+                    image 'hashicorp/terraform:light'
+                }
+            }
+            steps {
+                sh 'whoami'
+                sh 'terraform --version'}
+        }
         stage('Test') {
             agent {
                 docker { image 'node:16.13.1-alpine' }
