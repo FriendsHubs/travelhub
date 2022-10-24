@@ -1,13 +1,7 @@
 /* groovylint-disable , NestedBlockDepth, VariableTypeRequired */
 /* groovylint-disable-next-line CompileStatic */
 pipeline {
-    agent {
-        docker {
-            // image 'hashicorp/terraform:light'
-            label 'slave-zero'
-            // args  '--entrypoint="" '
-        }
-    }
+    agent any
     parameters {
         string(
             name: 'Branch_Name',
