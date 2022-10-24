@@ -2,7 +2,11 @@
 /* groovylint-disable-next-line CompileStatic */
 pipeline {
     agent {
-        label 'slave-zero'
+        docker {
+            image 'hashicorp/terraform:light'
+            label 'slave-zero'
+            args  '--entrypoint="" '
+        }
     }
     parameters {
         string(
@@ -19,61 +23,47 @@ pipeline {
             description: 'Image tag')
     }
     stages {
-        stage('build frontend docker image') {
-            when {
-                branch 'staging-*'
-            }
-            steps {
-                dir('frontend') {
-                    sh 'whoami'
-                    sh 'ls'
-                    sh 'which docker'
-                    script {
-                        docker.build(
-                   "${params.Image_Name}:${params.Image_Tag}")
-                    }
-                }
-            }
-        }
-        stage('Push to Dockerhub') {
-            when {
-                branch 'staging-*'
-            }
-            steps {
-                script {
-                    echo 'Pushing the image to docker hub'
-                    def localImage = "${params.Image_Name}:${params.Image_Tag}"
+        // stage('build frontend docker image') {
+        //     when {
+        //         branch 'staging-*'
+        //     }
+        //     steps {
+        //         dir('frontend') {
+        //             sh 'whoami'
+        //             sh 'ls'
+        //             sh 'which docker'
+        //             script {
+        //                 docker.build(
+        //            "${params.Image_Name}:${params.Image_Tag}")
+        //             }
+        //         }
+        //     }
+        // }
+        // stage('Push to Dockerhub') {
+        //     when {
+        //         branch 'staging-*'
+        //     }
+        //     steps {
+        //         script {
+        //             echo 'Pushing the image to docker hub'
+        //             def localImage = "${params.Image_Name}:${params.Image_Tag}"
 
-                /* groovylint-disable-next-line VariableTypeRequired */
-                    def repositoryName = "emmanuelekama/${localImage}"
+        //         /* groovylint-disable-next-line VariableTypeRequired */
+        //             def repositoryName = "emmanuelekama/${localImage}"
 
-                    // Create a tag that going to push into DockerHub
-                    sh "docker tag ${localImage} ${repositoryName} "
-                    docker.withRegistry('', 'DockerHubCredentials') {
-                        def image = docker.image("${repositoryName}")
-                        image.push()
-                    }
-                }
-            }
-        }
+        //             // Create a tag that going to push into DockerHub
+        //             sh "docker tag ${localImage} ${repositoryName} "
+        //             docker.withRegistry('', 'DockerHubCredentials') {
+        //                 def image = docker.image("${repositoryName}")
+        //                 image.push()
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('provision infrastructure') {
-            agent {
-                docker {
-                    image 'hashicorp/terraform:latest'
-                    // label 'slave-zero'
-                    args  '--entrypoint="" -u root'
-                }
-            }
             steps {
-                sh 'terraform version'}
-        }
-        stage('Test') {
-            agent {
-                docker { image 'node:16.13.1-alpine' }
-            }
-            steps {
-                sh 'node --version'
+                sh 'terraform version'
             }
         }
     }
