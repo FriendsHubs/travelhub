@@ -63,11 +63,14 @@ pipeline {
                     image 'hashicorp/terraform:latest'
                 }
             }
+            steps {
+                sh 'docker history --no-trunc hashicorp/terraform:latest'
+            }
 
-                steps {
-                    sh 'terrafome init'
-                    sh 'docker run --rm -it -v $PWD/Terraform:/data -w /data hashicorp/terraform:latest version'
-                }
+                // steps {
+                //     sh 'docker run --rm -it hashicorp/terraform:light version'
+                //     sh 'docker run --rm -it -v $PWD/Terraform:/data -w /data hashicorp/terraform:light init'
+                // }
         }
     }
 }
