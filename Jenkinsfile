@@ -61,11 +61,13 @@ pipeline {
             agent {
                 docker {
                     image 'hashicorp/terraform:latest'
+                    label 'slave-zero'
+                    args  '--entrypoint="" -u root'
                 }
             }
             steps {
                 // sh 'whoami'
-                sh 'terraform --version'}
+                sh 'terraform version'}
         }
         stage('Test') {
             agent {
