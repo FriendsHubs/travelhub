@@ -60,12 +60,13 @@ pipeline {
         stage('provision infrastructure') {
             agent {
                 docker {
-                    image 'hashicorp/terraform:latest'
+                    image 'hashicorp/terraform:light'
                 }
             }
 
                 steps {
-                    sh 'terrafome init'
+                    sh 'docker run --rm -it hashicorp/terraform:light version'
+                    sh 'docker run --rm -it hashicorp/terraform:light init'
                 }
         }
     }
