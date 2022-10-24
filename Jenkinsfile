@@ -60,19 +60,17 @@ pipeline {
         stage('provision infrastructure') {
             agent {
                 docker {
-                    image 'hashicorp/terraform:latest'
+                    image 'hashicorp/terraform:light'
                 }
             }
             steps {
                 script {
-                    sh ' sudo docker images'
+                    sh 'terraform version'
+                //     sh 'docker run --rm -it hashicorp/terraform:light version'
+                    sh 'sudo docker images'
                     // sh ' sudo docker run --rm -it -v $PWD/Terraform:/data -w /data hashicorp/terraform:light init'
                 }
             }
-
-                // steps {
-                //     sh 'docker run --rm -it hashicorp/terraform:light version'
-                // }
         }
     }
 }
