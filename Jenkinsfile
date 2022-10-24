@@ -58,12 +58,18 @@ pipeline {
         }
 
         stage('provision infrastructure') {
-            agent {
-                docker {
-                    image 'hashicorp/terraform:light'
-                    // label 'slave-zero'
-                    // args  '--entrypoint=""'
-                    args 'docker run --rm -it -v $PWD:/data -w /data hashicorp/terraform:light init'
+            // agent {
+            //     docker {
+            //         image 'hashicorp/terraform:light'
+            //         // label 'slave-zero'
+            //         // args  '--entrypoint=""'
+            //         args 'docker run --rm -it -v $PWD:/data -w /data hashicorp/terraform:light init'
+            //     }
+            // }
+            steps {
+                dir('Terraform') {
+                   sh './TFswitch'
+
                 }
             }
 
