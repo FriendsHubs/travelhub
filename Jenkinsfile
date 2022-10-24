@@ -65,8 +65,8 @@ pipeline {
             }
             steps {
                 script {
-                    sh ' sudo docker history --no-trunc hashicorp/terraform:latest'
-                    sh ' sudo docker run --rm -it -v $PWD/Terraform:/data -w /data hashicorp/terraform:light init'
+                    sh ' sudo docker images'
+                    // sh ' sudo docker run --rm -it -v $PWD/Terraform:/data -w /data hashicorp/terraform:light init'
                 }
             }
 
