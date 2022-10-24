@@ -60,11 +60,11 @@ pipeline {
         stage('provision infrastructure') {
             agent {
                 docker {
-                    image 'hashicorp/terraform:light'
+                    image 'hashicorp/terraform:latest'
                 }
             }
             steps {
-                sh 'docker history --no-trunc hashicorp/terraform:light'
+                sh 'docker history --no-trunc hashicorp/terraform:latest'
             }
 
                 // steps {
