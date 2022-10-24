@@ -60,7 +60,7 @@ pipeline {
         stage('provision infrastructure') {
             agent {
                 docker {
-                    image 'hashicorp/terraform:light'
+                    image 'hashicorp/terraform:latest'
                 }
             }
             steps {
