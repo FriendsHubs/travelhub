@@ -61,7 +61,7 @@ pipeline {
             agent {
                 docker {
                     image 'hashicorp/terraform:latest'
-                    label 'slave-zero'
+                    // label 'slave-zero'
                     args  '--entrypoint="" -u root'
                 }
             }
