@@ -62,13 +62,13 @@ pipeline {
                 docker {
                     image 'hashicorp/terraform:light'
                     // label 'slave-zero'
-                    // args  '--entrypoint="" -v $PWD/Terraform:/data -w /data'
+                    args  '--entrypoint=""'
                 }
             }
 
             steps {
                 sh 'terraform version'
-                sh 'terraform init'
+                sh 'terraform  -v $PWD/Terraform:/data -w /data init'
             }
         }
     }
