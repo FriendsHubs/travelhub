@@ -3,11 +3,6 @@
 pipeline {
     agent {
         { label 'slave-zero' }
-    // docker {
-    //     image 'hashicorp/terraform:light'
-    //     label
-    //     args  '--entrypoint="" -u root'
-    // }
     }
     parameters {
         string(
@@ -67,7 +62,7 @@ pipeline {
                 docker {
                     image 'hashicorp/terraform:light'
                     label 'slave-zero'
-                    args  '--entrypoint="" -u root'
+                    args  '--entrypoint=""'
                 }
             }
 
