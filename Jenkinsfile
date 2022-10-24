@@ -66,6 +66,7 @@ pipeline {
 
                 steps {
                     sh 'terrafome init'
+                    sh 'docker run --rm -it -v $PWD/Terraform:/data -w /data hashicorp/terraform:latest version'
                 }
         }
     }
