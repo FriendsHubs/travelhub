@@ -65,10 +65,11 @@ pipeline {
             }
             steps {
                 script {
-                    sh 'terraform version'
+                    sh 'whoami'
+                // sh 'hashicorp/terraform:light version'
                 //     sh 'docker run --rm -it hashicorp/terraform:light version'
-                    sh 'sudo docker images'
-                    // sh ' sudo docker run --rm -it -v $PWD/Terraform:/data -w /data hashicorp/terraform:light init'
+                // sh 'sudo docker images'
+                // sh ' sudo docker run --rm -it -v $PWD/Terraform:/data -w /data hashicorp/terraform:light init'
                 }
             }
         }
