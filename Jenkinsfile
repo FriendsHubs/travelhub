@@ -19,72 +19,56 @@ pipeline {
             description: 'Image tag')
     }
     stages {
-        // stage('build frontend docker image') {
-        //     when {
-        //         branch 'staging-*'
-        //     }
-        //     steps {
-        //         dir('frontend') {
-        //             sh 'whoami'
-        //             sh 'ls'
-        //             sh 'which docker'
-        //             script {
-        //                 docker.build(
-        //            "${params.Image_Name}:${params.Image_Tag}")
-        //             }
-        //         }
-        //     }
-        // }
-        // stage('Push to Dockerhub') {
-        //     when {
-        //         branch 'staging-*'
-        //     }
-        //     steps {
-        //         script {
-        //             echo 'Pushing the image to docker hub'
-        //             def localImage = "${params.Image_Name}:${params.Image_Tag}"
+        stage('build frontend docker image') {
+            when {
+                branch 'staging-*'
+            }
+            steps {
+                dir('frontend') {
+                    sh 'whoami'
+                    sh 'ls'
+                    sh 'which docker'
+                    script {
+                        docker.build(
+                   "${params.Image_Name}:${params.Image_Tag}")
+                    }
+                }
+            }
+        }
+        stage('Push to Dockerhub') {
+            when {
+                branch 'staging-*'
+            }
+            steps {
+                script {
+                    echo 'Pushing the image to docker hub'
+                    def localImage = "${params.Image_Name}:${params.Image_Tag}"
 
-        //         /* groovylint-disable-next-line VariableTypeRequired */
-        //             def repositoryName = "emmanuelekama/${localImage}"
+                /* groovylint-disable-next-line VariableTypeRequired */
+                    def repositoryName = "emmanuelekama/${localImage}"
 
-        //             // Create a tag that going to push into DockerHub
-        //             sh "docker tag ${localImage} ${repositoryName} "
-        //             docker.withRegistry('', 'DockerHubCredentials') {
-        //                 def image = docker.image("${repositoryName}")
-        //                 image.push()
-        //             }
-        //         }
-        //     }
-        // }
+                    // Create a tag that going to push into DockerHub
+                    sh "docker tag ${localImage} ${repositoryName} "
+                    docker.withRegistry('', 'DockerHubCredentials') {
+                        def image = docker.image("${repositoryName}")
+                        image.push()
+                    }
+                }
+            }
+        }
 
         stage('provision infrastructure') {
             agent {
                 docker {
                     image 'hashicorp/terraform:light'
                     // label 'slave-zero'
-                    args  '--entrypoint=""'
+                    args  '--entrypoint="" -v $PWD/Terraform:/data -w /data'
                 }
             }
 
             steps {
                 sh 'terraform version'
-            }
-        }
-        stage('provision infrastructure node') {
-            agent {
-                docker {
-                    image 'node:current-alpine3.15'
-                    // label 'slave-zero'
-                    // args  '--entrypoint=""'
-                }
-            }
-            steps {
-                sh 'node --version'
-            }
-        }
-        stage('provision infrastructure python') {
-            steps {
-                sh 'echo terraform version ___'
+                sh 'terraform init'
             }
         }
     }
