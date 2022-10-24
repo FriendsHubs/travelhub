@@ -71,8 +71,15 @@ pipeline {
             }
         }
         stage('provision infrastructure node') {
+            agent {
+                docker {
+                    image 'node:current-alpine3.15'
+                    // label 'slave-zero'
+                    // args  '--entrypoint=""'
+                }
+            }
             steps {
-                sh ' echo terraform version'
+                sh 'node --version'
             }
         }
         stage('provision infrastructure python') {
