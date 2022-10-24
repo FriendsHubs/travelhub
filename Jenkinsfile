@@ -66,7 +66,6 @@ pipeline {
                 }
             }
             steps {
-                // sh 'whoami'
                 sh 'terraform version'}
         }
         stage('Test') {
