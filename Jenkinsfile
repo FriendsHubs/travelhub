@@ -2,9 +2,7 @@
 /* groovylint-disable-next-line CompileStatic */
 pipeline {
     agent {
-        node {
-        { label 'slave-zero' }
-        }
+        label 'slave-zero'
     }
     parameters {
         string(
