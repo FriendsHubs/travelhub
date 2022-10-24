@@ -3,9 +3,9 @@
 pipeline {
     agent {
         docker {
-            image 'hashicorp/terraform:light'
+            // image 'hashicorp/terraform:light'
             label 'slave-zero'
-            args  '--entrypoint="" '
+            // args  '--entrypoint="" '
         }
     }
     parameters {
@@ -62,6 +62,13 @@ pipeline {
         // }
 
         stage('provision infrastructure') {
+            agent {
+                docker {
+                    image 'hashicorp/terraform:light'
+                    // label 'slave-zero'
+                    args  '--entrypoint="" '
+                }
+            }
             steps {
                 sh 'terraform version'
             }
