@@ -1,7 +1,14 @@
 /* groovylint-disable , NestedBlockDepth, VariableTypeRequired */
 /* groovylint-disable-next-line CompileStatic */
 pipeline {
-    agent any
+    agent {
+        { label 'slave-zero' }
+    // docker {
+    //     image 'hashicorp/terraform:light'
+    //     label
+    //     args  '--entrypoint="" -u root'
+    // }
+    }
     parameters {
         string(
             name: 'Branch_Name',
@@ -60,11 +67,22 @@ pipeline {
                 docker {
                     image 'hashicorp/terraform:light'
                     label 'slave-zero'
-                    args  '--entrypoint="" '
+                    args  '--entrypoint="" -u root'
                 }
             }
+
             steps {
                 sh 'terraform version'
+            }
+        }
+        stage('provision infrastructure node') {
+            steps {
+                sh ' echo terraform version'
+            }
+        }
+        stage('provision infrastructure python') {
+            steps {
+                sh 'echo terraform version ___'
             }
         }
     }
