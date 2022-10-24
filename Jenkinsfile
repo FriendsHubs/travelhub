@@ -4,18 +4,6 @@ pipeline {
     agent {
         label 'slave-zero'
     }
-    // agent {  }
-    // agent {
-    //     docker {
-    //         image 'node:16.13.1-alpine'
-    //         label 'slave-zero'
-    //     }
-    // }
-    // environment {
-    //     tools {
-    //         'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
-    //     }
-    // }
     parameters {
         string(
             name: 'Branch_Name',
@@ -32,6 +20,9 @@ pipeline {
     }
     stages {
         stage('build frontend docker image') {
+            when {
+                branch 'staging-*'
+            }
             steps {
                 dir('frontend') {
                     sh 'whoami'
@@ -45,6 +36,9 @@ pipeline {
             }
         }
         stage('Push to Dockerhub') {
+            when {
+                branch 'staging-*'
+            }
             steps {
                 script {
                     echo 'Pushing the image to docker hub'
@@ -64,33 +58,16 @@ pipeline {
         }
 
         stage('provision infrastructure') {
-            agent{
+            agent {
                 docker {
                     image 'hashicorp/terraform:latest'
                 }
-                }
-                steps{
-                    sh 'ls'
-                    // dir ('terraform') {
-                    //    sh
-
-                    // }
-                }
-            
-        }
-
-        stage ('configure infrastructure with ansible') {
-             agent {
-                docker {
-                    image 'alpine:latest'
-                    reuseNode true
-                }
             }
-            steps {
-                sh 'ls'
-            }
+
+                steps {
+                    sh 'terrafome init'
+                }
         }
     }
-    
 }
 
