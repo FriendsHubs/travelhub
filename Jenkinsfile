@@ -66,7 +66,8 @@ pipeline {
 
                 steps {
                     sh 'docker run --rm -it hashicorp/terraform:light version'
-                    sh 'docker run --rm -it hashicorp/terraform:light init'
+                    // sh 'docker run --rm -it hashicorp/terraform:light init'
+                    sh 'docker run --rm -it -v $PWD/Terraform:/data -w /data hashicorp/terraform:light init'
                 }
         }
     }
