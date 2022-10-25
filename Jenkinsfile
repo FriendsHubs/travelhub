@@ -4,6 +4,13 @@ pipeline {
     agent {
         label 'slave-zero'
     }
+    options {
+        /* groovylint-disable-next-line LineLength */
+        buildDiscarder logRotator(artifactDaysToKeepStr: '',
+         artifactNumToKeepStr: '',
+         daysToKeepStr: '1',
+          numToKeepStr: '20')
+    }
     parameters {
         string(
             name: 'Branch_Name',
@@ -71,10 +78,8 @@ pipeline {
                     sh 'ls -l'
                     sh 'chmod +x TFswitch.sh'
                     sh './TFswitch.sh init'
-                   
                 }
             }
-
         }
     }
 }
