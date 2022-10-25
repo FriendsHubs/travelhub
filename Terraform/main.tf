@@ -31,6 +31,6 @@ resource "aws_instance" "public_frontend" {
   }
 }
 
-output "frontend_ip" {
-  value = "aws_instance.public_frontend.public_ip"
-}
+# output "frontend_ip" {
+#   value = "aws_instance.public_frontend.public_ip"
+# }
