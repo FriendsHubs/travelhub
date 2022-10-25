@@ -65,24 +65,19 @@ pipeline {
         }
 
         stage('provision infrastructure') {
-            // agent {
-            //     docker {
-            //         image 'hashicorp/terraform:light'
-            //         // label 'slave-zero'
-            //         // args  '--entrypoint=""'
-            //         args 'docker run --rm -it -v $PWD:/data -w /data hashicorp/terraform:light init'
-            //     }
-            // }
             steps {
-                dir('Terraform') {
-                    sh 'ls -l'
-                    sh 'chmod +x TFswitch.sh'
-                    sh 'chmod +x main.tf'
-                    sh './TFswitch.sh init'
-                    sh ' ./TFswitch.sh plan'
+                withCredentials([string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
+                       string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+                        dir('Terraform') {
+                            sh 'ls -l'
+                            sh "echo ${AWS_ACCESS_KEY_ID}"
+                            sh 'chmod +x TFswitch.sh'
+                            sh 'chmod +x main.tf'
+                            sh './TFswitch.sh init'
+                            sh ' ./TFswitch.sh plan'
+                        }
                 }
             }
         }
     }
 }
-
