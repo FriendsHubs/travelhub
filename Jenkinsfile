@@ -9,7 +9,7 @@ pipeline {
         buildDiscarder logRotator(artifactDaysToKeepStr: '',
          artifactNumToKeepStr: '',
          daysToKeepStr: '1',
-          numToKeepStr: '20')
+          numToKeepStr: '15')
     }
     parameters {
         string(
@@ -77,6 +77,7 @@ pipeline {
                 dir('Terraform') {
                     sh 'ls -l'
                     sh 'chmod +x TFswitch.sh'
+                    sh 'chmod +x main.tf'
                     sh './TFswitch.sh init'
                 }
             }

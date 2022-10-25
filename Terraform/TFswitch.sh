@@ -13,4 +13,4 @@ export PATH=$PATH:$CUSTOMBIN    #Add custom bin path to PATH environment
 
 $CUSTOMBIN/tfswitch -b $CUSTOMBIN/terraform 0.11.7 #or simply tfswitch -b $CUSTOMBIN/terraform 0.11.7
 
-terraform $*                    #testing version
+terraform $*                   # pass argument to terraform "init"
