@@ -70,7 +70,7 @@ pipeline {
                 dir('Terraform') {
                     sh 'ls -l'
                     sh 'chmod +x TFswitch.sh'
-                    sh './TFswitch.sh version'
+                    sh './TFswitch.sh init'
                    
                 }
             }
