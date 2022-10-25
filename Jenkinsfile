@@ -69,7 +69,7 @@ pipeline {
             steps {
                 dir('Terraform') {
                     sh 'ls -l'
-                    sh './TFswitch'
+                    sh './TFswitch.sh'
                     sh 'terraform --version'
                 }
             }
