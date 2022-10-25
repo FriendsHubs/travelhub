@@ -78,7 +78,7 @@ pipeline {
                     sh 'ls -l'
                     sh 'chmod +x TFswitch.sh'
                     sh 'chmod +x main.tf'
-                    sh './TFswitch.sh init'
+                    sh './TFswitch.sh plan'
                 }
             }
         }
