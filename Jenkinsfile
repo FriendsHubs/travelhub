@@ -73,11 +73,9 @@ pipeline {
                 }
             }
 
-            // steps {
-            //     sh 'terraform version'
-            //     // sh 'terraform  -v $PWD/Terraform:/data -w /data init'
-            //     sh 'terraform  plan'
-            // }
+            steps {
+                sh 'terraform version'
+            }
         }
     }
 }
