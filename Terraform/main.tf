@@ -11,7 +11,7 @@ resource "aws_security_group" "frontend_sg" {
     to_port   = 22
     protocol  = "tcp"
   }
-  // Terraform removes the default rule
+  // Terraform removes the default egress rule, so we need to add it
   egress {
     from_port   = 0
     to_port     = 0
@@ -20,6 +20,7 @@ resource "aws_security_group" "frontend_sg" {
   }
 
 }
+
 resource "aws_instance" "public_frontend" {
   ami                    = "ami-0493936afbe820b28"
   instance_type          = "t2.micro"
