@@ -71,7 +71,7 @@ pipeline {
                         dir('Terraform') {
                             sh 'ls -l'
                             sh "echo ${AWS_ACCESS_KEY_ID}"
-                            // sh 'chmod +x TFswitch.sh'
+                             sh 'chmod +x TFswitch.sh'
                             // sh 'chmod +x main.tf'
                             sh './TFswitch.sh init'
                             sh ' ./TFswitch.sh plan'
