@@ -9,7 +9,7 @@ pipeline {
         buildDiscarder logRotator(artifactDaysToKeepStr: '',
          artifactNumToKeepStr: '',
          daysToKeepStr: '1',
-          numToKeepStr: '15')
+          numToKeepStr: '3')
     }
     parameters {
         string(
@@ -71,8 +71,8 @@ pipeline {
                         dir('Terraform') {
                             sh 'ls -l'
                             sh "echo ${AWS_ACCESS_KEY_ID}"
-                            sh 'chmod +x TFswitch.sh'
-                            sh 'chmod +x main.tf'
+                            // sh 'chmod +x TFswitch.sh'
+                            // sh 'chmod +x main.tf'
                             sh './TFswitch.sh init'
                             sh ' ./TFswitch.sh plan'
                         }

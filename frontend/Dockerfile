@@ -1,7 +1,6 @@
 # ==== CONFIGURE =====
 # Use a Node 16 base image
 FROM node:16-alpine 
-# FROM node:12
 
 # ENV PORT 3000
 
