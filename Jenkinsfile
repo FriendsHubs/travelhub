@@ -73,6 +73,7 @@ pipeline {
                              sh 'chmod +x TFswitch.sh'
                             sh './TFswitch.sh init'
                             sh ' ./TFswitch.sh plan'
+                            sh './TFswitch.sh apply -auto-approve -no-color' 
                         }
                 }
             }
