@@ -78,6 +78,7 @@ pipeline {
 >>>>>>> c3cbcf5469680de814ed93f4d76ad96243a0a4ae
                             sh './TFswitch.sh init'
                             sh ' ./TFswitch.sh plan'
+                            sh './TFswitch.sh apply -auto-approve -no-color' 
                         }
                 }
             }
