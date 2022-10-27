@@ -1,6 +1,16 @@
+terraform {
+ required_providers {
+  aws = {
+     source  = "hashicorp/aws"
+      version = "4.36.1"
+   }
+ } 
+}
+
 provider "aws" {
   region = "eu-west-3"
 }
+
 
 resource "aws_security_group" "frontend_sg" {
   ingress {
