@@ -44,6 +44,7 @@ resource "aws_lb_listener" "ecs_listener" {
 }
 
 
+
 resource "aws_ecs_task_definition" "travelhub_task" {
   family                   = "travelhub"
   network_mode             = "awsvpc"
@@ -51,7 +52,7 @@ resource "aws_ecs_task_definition" "travelhub_task" {
   cpu                      = 1024
   memory                   = 2048
 
-  container_definitions = <<DEFINITION
+  container_definitions = <<TASK_DEFINITION
 [
   {
     "image": "ekama/travel_hub:latest",
@@ -67,7 +68,7 @@ resource "aws_ecs_task_definition" "travelhub_task" {
     ]
   }
 ]
-DEFINITION
+TASK_DEFINITION
 }
 
 resource "aws_security_group" "travelhub_task_sg" {
@@ -109,7 +110,7 @@ resource "aws_ecs_service" "travelhub_service" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.ecs_tg.id
-    container_name   = "travelhub"
+    container_name   = "travelhub-app"
     container_port   = 3000
   }
 
@@ -120,3 +121,18 @@ resource "aws_ecs_service" "travelhub_service" {
 output "load_balancer_dns" {
   value = aws_lb.ecs_lb.dns_name
 }
+
+
+# data "aws_ssm_parameter" "docker-username" {
+#   name = "dockerhub-username"
+# }
+
+# data "aws_ssm_parameter" "docker-password" {
+#   name = "dockerhub-password"
+# }
+
+
+# resource "aws_iam_role" "ecs_role" {
+  
+  
+# }
