@@ -4,9 +4,9 @@ resource "aws_security_group" "ecs_lb_sg" {
     ingress {
       cidr_blocks = [ "0.0.0.0/0" ]
       description = "Allow http traffic to ECS load balancer"
-      from_port = 80
+      from_port = 3000
       protocol = "tcp"
-      to_port = 80
+      to_port = 3000
     } 
 
     egress {
