@@ -4,9 +4,9 @@ resource "aws_security_group" "ecs_lb_sg" {
     ingress {
       cidr_blocks = [ "0.0.0.0/0" ]
       description = "Allow http traffic to ECS load balancer"
-      from_port = 3000
+      from_port = 80
       protocol = "tcp"
-      to_port = 3000
+      to_port = 80
     } 
 
     egress {
@@ -24,8 +24,8 @@ resource "aws_security_group" "travelhub_task_sg" {
 
   ingress {
     protocol        = "tcp"
-    from_port       = 3000
-    to_port         = 3000
+    from_port       = 80
+    to_port         = 80
     security_groups = [aws_security_group.ecs_lb_sg.id]
   }
 
