@@ -26,7 +26,7 @@ resource "aws_lb" "ecs_lb" {
 
 resource "aws_lb_target_group" "ecs_tg" {
   name        = "ecs-target-group"
-  port        = 3000
+  port        = 80
   protocol    = "HTTP"
   vpc_id      = aws_vpc.travelhub_vpc.id
   target_type = "ip"
@@ -34,7 +34,7 @@ resource "aws_lb_target_group" "ecs_tg" {
 
 resource "aws_lb_listener" "ecs_listener" {
   load_balancer_arn = aws_lb.ecs_lb.id
-  port              = "80"
+  port              = 80
   protocol          = "HTTP"
 
   default_action {
@@ -63,7 +63,7 @@ resource "aws_ecs_task_definition" "travelhub_task" {
     "portMappings": [
       {
         "containerPort": 3000,
-        "hostPort": 3000
+        "hostPort": 80
       }
     ]
   }
@@ -77,8 +77,8 @@ resource "aws_security_group" "travelhub_task_sg" {
 
   ingress {
     protocol        = "tcp"
-    from_port       = 3000
-    to_port         = 3000
+    from_port       = 80
+    to_port         = 80
     security_groups = [aws_security_group.ecs_lb_sg.id]
   }
 
@@ -111,7 +111,7 @@ resource "aws_ecs_service" "travelhub_service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.ecs_tg.id
     container_name   = "travelhub-app"
-    container_port   = 3000
+    container_port   = 80
   }
 
   depends_on = [aws_lb_listener.ecs_listener]
