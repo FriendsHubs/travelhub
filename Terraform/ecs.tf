@@ -111,7 +111,7 @@ resource "aws_ecs_service" "travelhub_service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.ecs_tg.id
     container_name   = "travelhub-app"
-    container_port   = 3000
+    container_port   = 80
   }
 
   depends_on = [aws_lb_listener.ecs_listener]
