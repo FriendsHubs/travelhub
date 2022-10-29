@@ -70,16 +70,9 @@ pipeline {
                        string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                         dir('Terraform') {
                             sh 'ls -l'
-<<<<<<< HEAD
                             sh 'chmod +x TFswitch.sh'
-                            sh 'chmod +x main.tf'
-=======
-                             sh 'chmod +x TFswitch.sh'
->>>>>>> c3cbcf5469680de814ed93f4d76ad96243a0a4ae
                             sh './TFswitch.sh init'
-                            sh ' ./TFswitch.sh plan'
-                            //sh './TFswitch.sh apply -auto-approve -no-color' 
-                            sh './TFswitch.sh destroy -auto-approve -no-color'
+                            sh './TFswitch.sh apply'
                         }
                 }
             }
