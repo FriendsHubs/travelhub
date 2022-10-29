@@ -26,7 +26,7 @@ resource "aws_lb" "ecs_lb" {
 
 resource "aws_lb_target_group" "ecs_tg" {
   name        = "ecs-target-group"
-  port        = 80
+  port        = 3000
   protocol    = "HTTP"
   vpc_id      = aws_vpc.travelhub_vpc.id
   target_type = "ip"
@@ -111,7 +111,7 @@ resource "aws_ecs_service" "travelhub_service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.ecs_tg.id
     container_name   = "travelhub-app"
-    container_port   = 80
+    container_port   = 3000
   }
 
   depends_on = [aws_lb_listener.ecs_listener]
