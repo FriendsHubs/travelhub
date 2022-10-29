@@ -72,8 +72,8 @@ pipeline {
                             sh 'ls -l'
                             sh 'chmod +x TFswitch.sh'
                             sh './TFswitch.sh init'
-                            sh './TFswitch.sh apply -auto-approve'
-                            // sh './TFswitch.sh distroy -auto-approve'
+                            // sh './TFswitch.sh apply -auto-approve'
+                            sh './TFswitch.sh distroy -auto-approve'
                         }
                 }
             }
