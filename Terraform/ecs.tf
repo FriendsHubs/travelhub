@@ -63,7 +63,7 @@ resource "aws_ecs_task_definition" "travelhub_task" {
     "portMappings": [
       {
         "containerPort": 3000,
-        "hostPort": 80
+        "hostPort": 3000
       }
     ]
   }
@@ -111,7 +111,7 @@ resource "aws_ecs_service" "travelhub_service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.ecs_tg.id
     container_name   = "travelhub-app"
-    container_port   = 80
+    container_port   = 3000
   }
 
   depends_on = [aws_lb_listener.ecs_listener]
