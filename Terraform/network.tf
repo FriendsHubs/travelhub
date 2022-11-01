@@ -4,7 +4,6 @@ data "aws_availability_zones" "available_zones" {
 
 resource "aws_vpc" "travelhub_vpc" {
   cidr_block = "10.32.0.0/16"
-
   tags = {
     "Name" = var.project_name
   }
@@ -84,6 +83,6 @@ resource "aws_route_table" "private_rtb" {
 resource "aws_route_table_association" "private_rtb_assoc" {
   count          = 2
   subnet_id      = element(aws_subnet.travelhub_private_subnet.*.id, count.index)
-  route_table_id = aws_route_table.private_rtb.id
+  route_table_id = element(aws_route_table.private_rtb[*].id, count.index)
 
 }
