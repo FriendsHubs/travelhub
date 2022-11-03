@@ -39,7 +39,7 @@ resource "aws_ecs_service" "travel_hub_service" {
 
   network_configuration {
     security_groups = [aws_security_group.travel_hub_SG_task.id]
-    subnets         = aws_subnet.travle_hub_private.*.id
+    subnets         = aws_subnet.travel_hub_private.*.id
   }
 
   load_balancer {

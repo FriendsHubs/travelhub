@@ -10,7 +10,7 @@ resource "aws_vpc" "travel_hub" {
 }
 
 
-resource "aws_subnet" "travle_hub_public" {
+resource "aws_subnet" "travel_hub_public" {
   count                   = 2
   cidr_block              = cidrsubnet(aws_vpc.travel_hub.cidr_block, 8, 2 + count.index)
   availability_zone       = data.aws_availability_zones.available_zones.names[count.index]
@@ -43,7 +43,7 @@ resource "aws_eip" "travel_hub_eip" {
 
 resource "aws_nat_gateway" "travel_hub_nat_gateway" {
   count         = 2
-  subnet_id     = element(aws_subnet.travle_hub_public.*.id, count.index)
+  subnet_id     = element(aws_subnet.travel_hub_public.*.id, count.index)
   allocation_id = element(aws_eip.travel_hub_eip.*.id, count.index)
 }
 
