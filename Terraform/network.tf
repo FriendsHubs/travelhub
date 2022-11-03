@@ -4,6 +4,9 @@ data "aws_availability_zones" "available_zones" {
 
 resource "aws_vpc" "travel_hub" {
   cidr_block = "10.32.0.0/16"
+  tags = {
+    "Name" = var.project_name
+  }
 }
 
 
