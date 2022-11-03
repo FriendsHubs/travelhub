@@ -1,6 +1,6 @@
 resource "aws_lb" "travel_hub_internet_faceing_lb" {
   name            = "example-lb"
-  subnets         = aws_subnet.travle_hub_public.*.id
+  subnets         = aws_subnet.travel_hub_public.*.id
   security_groups = [aws_security_group.travel_hub_sg_lb.id]
 }
 
