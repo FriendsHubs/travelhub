@@ -18,7 +18,7 @@ resource "aws_subnet" "travle_hub_public" {
   map_public_ip_on_launch = true
 }
 
-resource "aws_subnet" "travle_hub_private" {
+resource "aws_subnet" "travel_hub_private" {
   count             = 2
   cidr_block        = cidrsubnet(aws_vpc.travel_hub.cidr_block, 8, count.index)
   availability_zone = data.aws_availability_zones.available_zones.names[count.index]
@@ -59,6 +59,6 @@ resource "aws_route_table" "travel_hub_private_rtb" {
 
 resource "aws_route_table_association" "private" {
   count          = 2
-  subnet_id      = element(aws_subnet.travle_hub_private.*.id, count.index)
+  subnet_id      = element(aws_subnet.travel_hub_private.*.id, count.index)
   route_table_id = element(aws_route_table.travel_hub_private_rtb.*.id, count.index)
 }
