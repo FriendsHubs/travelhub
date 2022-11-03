@@ -1,23 +1,64 @@
-# ==== CONFIGURE =====
-# Use a Node 16 base image
-FROM node:16-alpine 
+# # ==== CONFIGURE =====
+# # Use a Node 16 base image
+FROM node:16-alpine  as BUILD_IMAGE
 
-# ENV PORT 3000
+# # ENV PORT 3000
 
-# Create app directory
-RUN mkdir -p /usr/src/app
+# # Create app directory
+# RUN mkdir -p /usr/src/app
+# WORKDIR /usr/src/app
+
+# # Installing dependencies
+# COPY package*.json /usr/src/app/
+# RUN yarn install
+
+# # Copying source files
+# COPY . /usr/src/app
+
+# # Building app
+# RUN yarn build
+# EXPOSE 3000
+
+# # Running the app
+# FROM node:12-alpine
+
 WORKDIR /usr/src/app
 
-# Installing dependencies
-COPY package*.json /usr/src/app/
-RUN yarn install
+COPY package.json yarn.lock ./
 
-# Copying source files
-COPY . /usr/src/app
+# install dependencies
+RUN yarn --frozen-lockfile
 
-# Building app
+COPY . .
+
+# install node-prune (https://github.com/tj/node-prune)
+# RUN curl -sfL https://install.goreleaser.com/github.com/tj/node-prune.sh | bash -s -- -b /usr/local/bin
+
+
+# build application
 RUN yarn build
-EXPOSE 3000
+# install just production packages 
+# RUN yarn prune --production
 
-# Running the app
+
+# run the prune command 
+# RUN /usr/local/bin/node-prune
+
+
+# use a fresh images 
+FROM node:16-alpine 
+
+
+WORKDIR /usr/src/app
+
+# copy from build image
+COPY --from=BUILD_IMAGE /usr/src/app/.next ./.next
+COPY --from=BUILD_IMAGE /usr/src/app/node_modules ./node_modules
+COPY package.json yarn.lock ./
+
+# RUN yarn install --production=true
+
+EXPOSE 3030
+
+
 CMD ["yarn", "start"]
