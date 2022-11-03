@@ -5,7 +5,7 @@ resource "aws_ecs_cluster" "main" {
 
 
 resource "aws_ecs_task_definition" "travel_hub_task_definition" {
-  family                   = "hello-world-app"
+  family                   = "travel_hub"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = 1024
@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "travel_hub_task_definition" {
     "image": "emmanuelekama/travel_hub",
     "cpu": 1024,
     "memory": 2048,
-    "name": "hello-world-app",
+    "name": "travel_hub",
     "networkMode": "awsvpc",
     "portMappings": [
       {
@@ -31,7 +31,7 @@ DEFINITION
 }
 
 resource "aws_ecs_service" "travel_hub_service" {
-  name            = "hello-world-service"
+  name            = "travel_hub"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.travel_hub_task_definition.arn
   desired_count   = 1
@@ -44,7 +44,7 @@ resource "aws_ecs_service" "travel_hub_service" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.travel_hub_TG.id
-    container_name   = "hello-world-app"
+    container_name   = "travel_hub"
     container_port   = 3000
   }
 
