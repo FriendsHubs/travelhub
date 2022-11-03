@@ -1,23 +1,23 @@
 
-resource "aws_ecs_cluster" "ecs_cluster" {
-  name = "travelhub-cluster"
+resource "aws_ecs_cluster" "main" {
+  name = "example-cluster"
 }
 
 
-resource "aws_ecs_task_definition" "travelhub_task" {
-  family                   = "travelhub"
+resource "aws_ecs_task_definition" "travel_hub_task_definition" {
+  family                   = "hello-world-app"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = 1024
   memory                   = 2048
 
-  container_definitions = <<TASK_DEFINITION
+  container_definitions = <<DEFINITION
 [
   {
-    "image": "ekama/travel_hub:latest",
+    "image": "emmanuelekama/travel_hub",
     "cpu": 1024,
     "memory": 2048,
-    "name": "travelhub-app",
+    "name": "hello-world-app",
     "networkMode": "awsvpc",
     "portMappings": [
       {
@@ -27,31 +27,28 @@ resource "aws_ecs_task_definition" "travelhub_task" {
     ]
   }
 ]
-TASK_DEFINITION
+DEFINITION
 }
 
-resource "aws_ecs_service" "travelhub_service" {
-  name            = "travelhub-service"
-  cluster         = aws_ecs_cluster.ecs_cluster.id
-  task_definition = aws_ecs_task_definition.travelhub_task.arn
-  desired_count   = var.frontend_count
+resource "aws_ecs_service" "travel_hub_service" {
+  name            = "hello-world-service"
+  cluster         = aws_ecs_cluster.main.id
+  task_definition = aws_ecs_task_definition.travel_hub_task_definition.arn
+  desired_count   = 1
   launch_type     = "FARGATE"
 
   network_configuration {
-    security_groups = [aws_security_group.travelhub_task_sg.id]
-    subnets         = aws_subnet.travelhub_private_subnet.*.id
+    security_groups = [aws_security_group.travel_hub_SG_task.id]
+    subnets         = aws_subnet.travle_hub_private.*.id
   }
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.ecs_tg.id
-    container_name   = "travelhub-app"
+    target_group_arn = aws_lb_target_group.travel_hub_TG.id
+    container_name   = "hello-world-app"
     container_port   = 3000
   }
 
-  depends_on = [aws_lb_listener.ecs_listener]
+  depends_on = [aws_lb_listener.travel_hub_TG_listener]
 }
 
 
-output "load_balancer_dns" {
-  value = aws_lb.ecs_lb.dns_name
-}
