@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-}
+const withPWA = require('next-pwa')
+const runtimeCaching = require('next-pwa/cache')
 
-module.exports = nextConfig
+module.exports = withPWA({
+  images: {
+    domains: ['images.unsplash.com'],
+  },
+  pwa: {
+    dest: 'public',
+    runtimeCaching,
+  },
+})

@@ -58,7 +58,7 @@ COPY package.json yarn.lock ./
 
 # RUN yarn install --production=true
 
-EXPOSE 3030
+EXPOSE 3000
 
 
 CMD ["yarn", "start"]
