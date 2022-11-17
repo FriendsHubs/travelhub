@@ -27,9 +27,9 @@ pipeline {
     }
     stages {
         stage('build frontend docker image') {
-            when {
-                branch 'staging-*'
-            }
+            // when {
+            //     branch 'staging-*'
+            // }
             steps {
                 dir('frontend') {
                     sh 'whoami'
@@ -43,9 +43,9 @@ pipeline {
             }
         }
         stage('Push to Dockerhub') {
-            when {
-                branch 'staging-*'
-            }
+            // when {
+            //     branch 'staging-*'
+            // }
             steps {
                 script {
                     echo 'Pushing the image to docker hub'
@@ -72,8 +72,8 @@ pipeline {
                             sh 'ls -l'
                             sh 'chmod +x TFswitch.sh'
                             sh './TFswitch.sh init'
-                            // sh './TFswitch.sh apply -auto-approve'
-                            sh './TFswitch.sh destroy -auto-approve'
+                            sh './TFswitch.sh apply -auto-approve'
+                            // sh './TFswitch.sh destroy -auto-approve'
                         }
                 }
             }
